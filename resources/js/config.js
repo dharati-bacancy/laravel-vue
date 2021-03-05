@@ -1,5 +1,5 @@
 export default {
   baseUrl: "http://127.0.0.1:8000/",
   basePath: "/",
-  fileUploadPath: "http://127.0.0.1:8000/uploads/"
+  fileUploadPath: "http://127.0.0.1:8000/storage/uploads/"
 };

@@ -6,6 +6,7 @@ use App\Resource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Helpers\ImageUploadHelper;
 
 class ResourceController extends Controller
 {
@@ -19,9 +20,9 @@ class ResourceController extends Controller
         try {
 
             if(isset($request->name) && !empty($request->name)) {
-                $resources = Resource::where('name', 'LIKE', '%' . $request->name . '%')->get();
+                $resources = Resource::where('name', 'LIKE', '%' . $request->name . '%')->get()->sortByDesc('id');
             } else {
-                $resources = Resource::all();
+                $resources = Resource::orderBy('id', 'DESC')->get();
             }
 
             if (count($resources) > 0) {
@@ -67,17 +68,19 @@ class ResourceController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                // 'image' => 'required'
+                'image' => 'required|mimes:jpeg,png,jpg'
             ]);
-
             if ($validator->fails()) {
                 $response = [
-                    'msg' => $validator->errors->all(),
+                    'msg' => $validator->errors(),
                     'status' => 0,
                 ];
             }
+
+            $image = ImageUploadHelper::imageupload($request, 'image');
             $resource = Resource::create([
                 'name' => $request->name,
+                'image' => $image
             ]);
             
             if ($resource) {
@@ -154,9 +157,25 @@ class ResourceController extends Controller
     public function update(Request $request)
     {
         try {
-            $resource = Resource::where('id', $request->id)->update([
-                'name' => $request->name,
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
             ]);
+
+            if ($validator->fails()) {
+                $response = [
+                    'msg' => $validator->errors->all(),
+                    'status' => 0,
+                ];
+            }
+            $data = [];
+            if($request->image) {
+                $image = ImageUploadHelper::imageupload($request, 'image');
+                $data['image'] = $image;
+                $data['name'] = $request->name;
+            } else {
+                $data['name'] = $request->name;
+            }
+            $resource = Resource::where('id', $request->id)->update($data);
             
             if ($resource) {
                 $response = [

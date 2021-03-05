@@ -5,63 +5,62 @@
         <h4 class="card-header">Add Resource</h4>
         <div class="card-body">
           <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form" @submit.prevent="addResource()">
-            <!-- <form method="POST" @submit.prevent="addResource"> -->
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="form-label">Name *</label>
-                            <validation-provider
-                            name="Name"
-                            rules="required"
-                            v-slot="{ errors }"
-                            >
-                            <input
-                                :class="[errors[0] ? 'form-control-red' : '']"
-                                type="text"
-                                class="form-control mb-1"
-                                v-model="name"
-                            />
-                            <small
-                                :class="[errors[0] ? 'text-danger' : 'text-muted']"
-                                class="font-weight-bold"
-                                style="font-size: 11px"
-                                >{{ errors[0] ? errors[0] : "Enter Name" }}</small
-                            >
-                            </validation-provider>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Image *</label>
-                            <validation-provider
-                            name="Image"
-                            v-slot="{ errors }"
-                            >
-                            <input
-                                :class="[errors[0] ? 'form-control-red' : '']"
-                                type="file"
-                                class="form-control mb-1"
-                            />
-                            <small
-                                :class="[errors[0] ? 'text-danger' : 'text-muted']"
-                                class="font-weight-bold"
-                                style="font-size: 11px"
-                                >{{ errors[0] ? errors[0] : "Choose image" }}</small
-                            >
-                            </validation-provider>
-                        </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="form-label">Name *</label>
+                        <validation-provider
+                        name="Name"
+                        rules="required"
+                        v-slot="{ errors }"
+                        >
+                        <input
+                            :class="[errors[0] ? 'form-control-red' : '']"
+                            type="text"
+                            class="form-control mb-1"
+                            v-model="name"
+                        />
+                        <small
+                            :class="[errors[0] ? 'text-danger' : 'text-muted']"
+                            class="font-weight-bold"
+                            style="font-size: 11px"
+                            >{{ errors[0] ? errors[0] : "Enter Name" }}</small
+                        >
+                        </validation-provider>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image *</label>
+                        <validation-provider
+                          name="Image"
+                          v-slot="{ errors }"
+                        >
+                        <input
+                          :class="[errors[0] ? 'form-control-red' : '']"
+                          type="file"
+                          ref="image"
+                          class="form-control mb-1"
+                        />
+                        <small
+                          :class="[errors[0] ? 'text-danger' : 'text-muted']"
+                          class="font-weight-bold"
+                          style="font-size: 11px"
+                          >{{ errors[0] ? errors[0] : "Choose image" }}</small
+                        >
+                        </validation-provider>
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    class="btn btn-sm btn-success font-weight-bold mt-2"
-                >
-                    Add
-                </button>
-                <router-link
-                    to="/resources"
-                    class="btn btn-sm btn-secondary mt-2"
-                    >Cancel</router-link
-                >
-            <!-- </form> -->
+            </div>
+            <button
+              type="submit"
+              class="btn btn-sm btn-success font-weight-bold mt-2"
+            >
+              Add
+            </button>
+            <router-link
+              to="/resources"
+              class="btn btn-sm btn-secondary mt-2"
+              >Cancel</router-link
+            >
           </ValidationObserver>
         </div>
       </div>
@@ -77,29 +76,51 @@ export default {
   data() {
     return {
       name: "",
+      image: "",
+      fileData: {},
     };
   },
   methods: {
     async addResource() {
         const valid = await this.$refs.observer.validate();
         if(valid) {
-            const payLoad = {
-                name: this.name,
-            };
-            axios
-                .post("/api/resource/store", payLoad)
+          let image = this.$refs.image.files[0];
+          if(image) {
+            this.image = "";
+            this.extension = image.name.split(".").pop();
+
+            if (
+              this.extension == "png" ||
+              this.extension == "jpg" ||
+              this.extension == "jpeg"
+            ) {
+              let formData = new FormData();
+              formData.append("image", image);
+              formData.append("type", "image");
+              formData.append("name", this.name);
+
+              axios
+                .post("/api/resource/store", formData, {
+                  headers: {
+                    "Content-Type": "multipart/form-data"
+                  },
+                })
                 .then(response => {
-                if (response.data.status == 1) {
+                  if (response.data.status == 1) {
                     this.success(response.data.msg);
                     this.$router.push("/resources");
-                }
-                if (response.data.status != 1) {
-                    this.error(response.data.msg);
-                }
+                  }
                 })
                 .catch(error => {
-                this.error(error);
+                  this.error(error);
                 });
+            } else {
+              this.error("Invalid file type");
+              this.$refs.image.value = null;
+            }
+          }
+        } else {
+          this.error("Please choose image");
         }
     }
   }

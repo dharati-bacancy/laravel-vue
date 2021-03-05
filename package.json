@@ -20,9 +20,12 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "v-datatable-light": "0.8.1",
         "vee-validate": "^3.4.5",
         "vue": "^2.6.12",
         "vue-router": "^3.4.9",
-        "vuejs-datepicker": "^1.6.2"
+        "vuejs-datepicker": "^1.6.2",
+        "lodash.orderby": "4.6.0",
+        "vue-simple-spinner": "1.2.8"
     }
 }

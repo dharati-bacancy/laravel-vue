@@ -4,8 +4,8 @@
       <div class="card mb-4">
         <h4 class="card-header">Edit Resource</h4>
         <div class="card-body">
-        <ValidationObserver v-slot="{ invalid }">
-            <form method="POST" v-on:submit.prevent="updateResource" id="form">
+        <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form" @submit.prevent="updateResource()">
+            <!-- <form method="POST" v-on:submit.prevent="updateResource" id="form"> -->
                 <div class="form-group">
                     <label for="name"><b>Name</b></label>
                     <validation-provider
@@ -30,12 +30,12 @@
                     <label for="name"><b>Image</b></label>
                     <validation-provider
                         name="Name"
-                        rules="required"
                         v-slot="{ errors }"
                     >
                     <input 
                         type="file" 
-                        placeholder="Enter Name" 
+                        placeholder="Enter Name"
+                        ref="img" 
                         :class="[errors[0] ? 'form-control-red' : '']"
                     />
                     <img
@@ -53,12 +53,11 @@
                     <button 
                         type="submit" 
                         class="signupbtn"
-                        :disabled="invalid" 
                         >
                         <strong>Update</strong>
                     </button>
                 </div>
-            </form>
+            <!-- </form/> -->
         </ValidationObserver>
         </div>
       </div>
@@ -104,25 +103,49 @@ export default {
             });
         },
 
-        updateResource() {
-            const payLoad = {
-                id: this.id,
-                name: this.name
-            };
-            axios
-            .post("api/resource/update", payLoad)
-            .then(response => {
-                if (response.data.status == 1) {
-                    this.success(response.data.msg);
-                    this.$router.push("/resources");
-                }
-                if (response.data.status != 1) {
-                    this.error(response.data.msg);
-                }
-            })
-            .catch(error => {
-                this.error(error);
-            });
+        async updateResource() {
+            const valid = await this.$refs.observer.validate();
+            if(valid) {
+                this.img = "";
+                let image = this.$refs.img.files[0];
+                let err = false;
+                if (image) {
+                    console.log(image)
+                    this.extension = image.name.split(".").pop();
+                    if(this.extension == "png" ||
+                    this.extension == "jpg" ||
+                    this.extension == "jpeg") {
+                    } else {
+                        err = true;
+                        this.error("Invalid file type.");
+                        this.$refs.img.value = null;
+                    }
+                } 
+                setTimeout(() => {
+                    let formData = new FormData();
+                    if(image && !err) {
+                        formData.append("image", image);
+                        formData.append("type", "image");
+                    }
+                    formData.append("name", this.name);
+                    formData.append("id", this.id);
+                
+                    axios
+                    .post("api/resource/update", formData)
+                    .then(response => {
+                        if (response.data.status == 1) {
+                            this.success(response.data.msg);
+                            this.$router.push("/resources");
+                        }
+                        if (response.data.status != 1) {
+                            this.error(response.data.msg);
+                        }
+                    })
+                    .catch(error => {
+                        this.error(error);
+                    });
+                }, 1000);
+            }
         }
     }
 };

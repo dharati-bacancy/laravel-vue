@@ -32,7 +32,7 @@ const router = [
         path: "resources/add",
         component: AddResource,
         default: true
-      },
+      }
     ]
   }
 ];
