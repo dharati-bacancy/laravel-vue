@@ -77,3 +77,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # laravel-vue
+
+Steps for setting up project in local
+
+Step1: Clone this repository
+Step2: Setup .env file
+Step3: Run commands:
+
+composer install
+npm install
+php artisan config:cache
+php artisan route:cache
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+php artisan config:clear
+php artisan migrate
+php artisan serve
+npm run dev
