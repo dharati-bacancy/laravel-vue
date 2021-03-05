@@ -52,10 +52,15 @@
                 <div class="clearfix">
                     <button 
                         type="submit" 
-                        class="signupbtn"
+                        class="signupbtn btn btn-sm btn-success font-weight-bold mt-2"
                         >
                         <strong>Update</strong>
                     </button>
+                    <router-link
+                        to="/resources"
+                        class="btn btn-sm btn-secondary mt-2"
+                        >Cancel</router-link
+                    >
                 </div>
             <!-- </form/> -->
         </ValidationObserver>

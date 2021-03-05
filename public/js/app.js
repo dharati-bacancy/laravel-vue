@@ -2356,6 +2356,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2570,12 +2575,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2697,9 +2696,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     search: function search() {
       var name = this.name;
-      var path = "/resources?name=" + this.name;
-      this.$router.push(path);
-      window.location.reload();
+
+      if (name) {
+        var path = "/resources?name=" + name;
+        this.$router.push(path);
+        window.location.reload();
+      }
     },
     dtEditClick: function dtEditClick(props) {
       return alert("Click props:" + JSON.stringify(props));
@@ -2863,7 +2865,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#app {\n  font-family: \"Avenir\", Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #2c3e50;\n  margin-top: 60px;\n}\n#app .title {\n  margin-bottom: 30px;\n}\n#app .items-per-page {\n  height: 100%;\n  display: flex;\n  align-items: center;\n  color: #337ab7;\n}\n#app .items-per-page label {\n  margin: 0 5px 0 0;\n}\n\n/* Datatable CSS */\n.v-datatable-light .header-item {\n  cursor: pointer;\n  color: #337ab7;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light .header-item:hover {\n  color: #ed9b19;\n}\n.v-datatable-light .header-item.no-sortable {\n  cursor: default;\n}\n.v-datatable-light .header-item.no-sortable:hover {\n  color: #337ab7;\n}\n.v-datatable-light .header-item .th-wrapper {\n  display: flex;\n  width: 100%;\n  height: 100%;\n  font-weight: bold;\n  align-items: baseline;\n}\n.v-datatable-light .header-item .th-wrapper.checkboxes {\n  justify-content: center;\n}\n.v-datatable-light .header-item .th-wrapper .arrows-wrapper {\n  display: flex;\n  flex-direction: column;\n  margin-left: 10px;\n  justify-content: space-between;\n}\n.v-datatable-light .header-item .th-wrapper .arrows-wrapper.centralized {\n  justify-content: center;\n}\n.v-datatable-light .arrow {\n  transition: color 0.15s ease-in-out;\n  width: 0;\n  height: 0;\n  border-left: 8px solid transparent;\n  border-right: 8px solid transparent;\n}\n.v-datatable-light .arrow.up {\n  border-bottom: 8px solid #337ab7;\n  margin-bottom: 5px;\n}\n.v-datatable-light .arrow.up:hover {\n  border-bottom: 8px solid #ed9b19;\n}\n.v-datatable-light .arrow.down {\n  border-top: 8px solid #337ab7;\n}\n.v-datatable-light .arrow.down:hover {\n  border-top: 8px solid #ed9b19;\n}\n#app .v-datatable-light .row-7 .column-4 {\n  color: steelblue;\n}\n#app .v-datatable-light .row-1 .column-2 {\n  color: green;\n}\n\n/* #app .v-datatable-light .row-2 .column-1 {\n  color: red;\n} */\n/* \n#app .v-datatable-light .row-3 {\n  color: pink;\n} */\n#app .v-datatable-light .column-5 {\n  color: goldenrod;\n}\n#app .v-datatable-light .row-3 .column-5 {\n  color: purple;\n}\n.v-datatable-light .footer {\n  display: flex;\n  justify-content: space-between;\n  width: 500px;\n}\n/* End Datatable CSS */\n\n/* Pagination CSS */\n.v-datatable-light-pagination {\n  list-style: none;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  margin: 0;\n  padding: 0;\n  width: 300px;\n  height: 30px;\n}\n.v-datatable-light-pagination .pagination-item {\n  width: 30px;\n  margin-right: 5px;\n  font-size: 16px;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light-pagination .pagination-item.selected {\n  color: #ed9b19;\n}\n.v-datatable-light-pagination .pagination-item .page-btn {\n  background-color: transparent;\n  outline: none;\n  border: none;\n  color: #337ab7;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light-pagination .pagination-item .page-btn:hover {\n  color: #ed9b19;\n}\n.v-datatable-light-pagination .pagination-item .page-btn:disabled {\n  cursor: not-allowed;\n  box-shadow: none;\n  opacity: 0.65;\n}\n/* END PAGINATION CSS */\n\n/* ITEMS PER PAGE DROPDOWN CSS */\n.item-per-page-dropdown {\n  background-color: transparent;\n  min-height: 30px;\n  border: 1px solid #337ab7;\n  border-radius: 5px;\n  color: #337ab7;\n}\n.item-per-page-dropdown:hover {\n  cursor: pointer;\n}\n.image {\n  height: 50px;\n  width: 50px;\n}\n.search {\n  font-size: 14px;\n  margin-top: 20px;\n  font-weight: 600;\n}\n\n/* END ITEMS PER PAGE DROPDOWN CSS */\n", ""]);
+exports.push([module.i, "\n#app {\n  font-family: \"Avenir\", Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n  color: #2c3e50;\n  margin-top: 60px;\n}\n#app .title {\n  margin-bottom: 30px;\n}\n#app .items-per-page {\n  height: 100%;\n  display: flex;\n  align-items: center;\n  color: #337ab7;\n}\n#app .items-per-page label {\n  margin: 0 5px 0 0;\n}\n\n/* Datatable CSS */\n.v-datatable-light .header-item {\n  cursor: pointer;\n  color: #337ab7;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light .header-item:hover {\n  color: #ed9b19;\n}\n.v-datatable-light .header-item.no-sortable {\n  cursor: default;\n}\n.v-datatable-light .header-item.no-sortable:hover {\n  color: #337ab7;\n}\n.v-datatable-light .header-item .th-wrapper {\n  display: flex;\n  width: 100%;\n  height: 100%;\n  font-weight: bold;\n  align-items: baseline;\n}\n.v-datatable-light .header-item .th-wrapper.checkboxes {\n  justify-content: center;\n}\n.v-datatable-light .header-item .th-wrapper .arrows-wrapper {\n  display: flex;\n  flex-direction: column;\n  margin-left: 10px;\n  justify-content: space-between;\n}\n.v-datatable-light .header-item .th-wrapper .arrows-wrapper.centralized {\n  justify-content: center;\n}\n.v-datatable-light .arrow {\n  transition: color 0.15s ease-in-out;\n  width: 0;\n  height: 0;\n  border-left: 8px solid transparent;\n  border-right: 8px solid transparent;\n}\n.v-datatable-light .arrow.up {\n  border-bottom: 8px solid #337ab7;\n  margin-bottom: 5px;\n}\n.v-datatable-light .arrow.up:hover {\n  border-bottom: 8px solid #ed9b19;\n}\n.v-datatable-light .arrow.down {\n  border-top: 8px solid #337ab7;\n}\n.v-datatable-light .arrow.down:hover {\n  border-top: 8px solid #ed9b19;\n}\n#app .v-datatable-light .row-7 .column-4 {\n  color: steelblue;\n}\n#app .v-datatable-light .row-1 .column-2 {\n  color: green;\n}\n\n/* #app .v-datatable-light .row-2 .column-1 {\n  color: red;\n} */\n/* \n#app .v-datatable-light .row-3 {\n  color: pink;\n} */\n#app .v-datatable-light .column-5 {\n  color: goldenrod;\n}\n#app .v-datatable-light .row-3 .column-5 {\n  color: purple;\n}\n.v-datatable-light .footer {\n  display: flex;\n  justify-content: space-between;\n  width: 500px;\n}\n/* End Datatable CSS */\n\n/* Pagination CSS */\n.v-datatable-light-pagination {\n  list-style: none;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  margin: 0;\n  padding: 0;\n  width: 300px;\n  height: 30px;\n}\n.v-datatable-light-pagination .pagination-item {\n  width: 30px;\n  margin-right: 5px;\n  font-size: 16px;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light-pagination .pagination-item.selected {\n  color: #ed9b19;\n}\n.v-datatable-light-pagination .pagination-item .page-btn {\n  background-color: transparent;\n  outline: none;\n  border: none;\n  color: #337ab7;\n  transition: color 0.15s ease-in-out;\n}\n.v-datatable-light-pagination .pagination-item .page-btn:hover {\n  color: #ed9b19;\n}\n.v-datatable-light-pagination .pagination-item .page-btn:disabled {\n  cursor: not-allowed;\n  box-shadow: none;\n  opacity: 0.65;\n}\n/* END PAGINATION CSS */\n\n/* ITEMS PER PAGE DROPDOWN CSS */\n.item-per-page-dropdown {\n  background-color: transparent;\n  min-height: 30px;\n  border: 1px solid #337ab7;\n  border-radius: 5px;\n  color: #337ab7;\n}\n.item-per-page-dropdown:hover {\n  cursor: pointer;\n}\n.image {\n  height: 50px;\n  width: 50px;\n  border-radius: 27px;\n}\n.search {\n  font-size: 14px;\n  margin-top: 20px;\n  font-weight: 600;\n}\n\n/* END ITEMS PER PAGE DROPDOWN CSS */\n", ""]);
 
 // exports
 
@@ -27811,16 +27813,31 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "clearfix" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "signupbtn",
-                            attrs: { type: "submit" }
-                          },
-                          [_c("strong", [_vm._v("Update")])]
-                        )
-                      ])
+                      _c(
+                        "div",
+                        { staticClass: "clearfix" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "signupbtn btn btn-sm btn-success font-weight-bold mt-2",
+                              attrs: { type: "submit" }
+                            },
+                            [_c("strong", [_vm._v("Update")])]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "btn btn-sm btn-secondary mt-2",
+                              attrs: { to: "/resources" }
+                            },
+                            [_vm._v("Cancel")]
+                          )
+                        ],
+                        1
+                      )
                     ]
                   }
                 }
@@ -27953,25 +27970,33 @@ var render = function() {
               key: "actions",
               fn: function(props) {
                 return [
-                  _c("input", {
-                    staticClass: "btn btn-info",
-                    attrs: { type: "button", value: "Edit" },
-                    on: {
-                      click: function($event) {
-                        return _vm.editResource(props)
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.editResource(props)
+                        }
                       }
-                    }
-                  }),
+                    },
+                    [_c("i", { staticClass: "sidenav-icon fas fa-edit" })]
+                  ),
                   _vm._v(" "),
-                  _c("input", {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button", value: "Delete" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteResource(props)
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteResource(props)
+                        }
                       }
-                    }
-                  })
+                    },
+                    [_c("i", { staticClass: "sidenav-icon fas fa-trash" })]
+                  )
                 ]
               }
             },

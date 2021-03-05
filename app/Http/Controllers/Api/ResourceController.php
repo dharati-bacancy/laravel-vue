@@ -20,7 +20,7 @@ class ResourceController extends Controller
         try {
 
             if(isset($request->name) && !empty($request->name)) {
-                $resources = Resource::where('name', 'LIKE', '%' . $request->name . '%')->get()->sortByDesc('id');
+                $resources = Resource::where('name', 'LIKE', '%' . $request->name . '%')->orderBy('id', 'DESC')->get();
             } else {
                 $resources = Resource::orderBy('id', 'DESC')->get();
             }
@@ -215,7 +215,7 @@ class ResourceController extends Controller
 
             if ($delete) {
                 $delete->delete();
-                $resource = Resource::all();
+                $resource = Resource::orderBy('id', 'DESC')->get();
 
                 $response = [
                     'msg' => 'Resource deleted successfully',

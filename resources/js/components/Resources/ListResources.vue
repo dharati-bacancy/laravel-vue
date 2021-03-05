@@ -46,18 +46,12 @@
       class="form-control"
     >
       <template slot="actions" slot-scope="props">
-        <input
-          type="button"
-          class="btn btn-info"
-          value="Edit"
-          @click="editResource(props);"
-        >
-        <input
-          type="button"
-          class="btn btn-danger"
-          value="Delete"
-          @click="deleteResource(props);"
-        >
+        <button type="button" class="btn btn-info" @click="editResource(props);">
+          <i class="sidenav-icon fas fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-danger" @click="deleteResource(props);">
+          <i class="sidenav-icon fas fa-trash"></i>
+        </button>
       </template>
       <div slot="image" slot-scope="props">
           <img 
@@ -228,9 +222,11 @@ export default {
 
     search() {
       let name = this.name;
-      const path = `/resources?name=`+this.name;
-      this.$router.push(path);
-      window.location.reload();
+      if(name) {
+        const path = `/resources?name=`+name;
+        this.$router.push(path);
+        window.location.reload();
+      }
     },
 
     dtEditClick: props => alert("Click props:" + JSON.stringify(props)),
@@ -448,6 +444,7 @@ export default {
 .image {
   height: 50px;
   width: 50px;
+  border-radius: 27px;
 }
 .search {
   font-size: 14px;
