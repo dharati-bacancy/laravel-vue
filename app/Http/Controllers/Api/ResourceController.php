@@ -68,7 +68,7 @@ class ResourceController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'image' => 'required|mimes:jpeg,png,jpg'
+                'image' => 'mimes:jpeg,png,jpg'
             ]);
             if ($validator->fails()) {
                 $response = [
@@ -77,7 +77,11 @@ class ResourceController extends Controller
                 ];
             }
 
-            $image = ImageUploadHelper::imageupload($request, 'image');
+            if($request->image) {
+                $image = ImageUploadHelper::imageupload($request, 'image');
+            } else {
+                $image = Resource::DEFAULT_PATH;
+            }
             $resource = Resource::create([
                 'name' => $request->name,
                 'image' => $image

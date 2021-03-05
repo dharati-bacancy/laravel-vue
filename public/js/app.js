@@ -2206,7 +2206,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var valid, image, formData;
+        var valid, err, image, _err, formData;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2216,6 +2217,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 valid = _context.sent;
+                err = false;
 
                 if (valid) {
                   image = _this.$refs.image.files[0];
@@ -2223,36 +2225,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   if (image) {
                     _this.image = "";
                     _this.extension = image.name.split(".").pop();
+                    _err = false;
 
-                    if (_this.extension == "png" || _this.extension == "jpg" || _this.extension == "jpeg") {
-                      formData = new FormData();
-                      formData.append("image", image);
-                      formData.append("type", "image");
-                      formData.append("name", _this.name);
-                      axios.post("/api/resource/store", formData, {
-                        headers: {
-                          "Content-Type": "multipart/form-data"
-                        }
-                      }).then(function (response) {
-                        if (response.data.status == 1) {
-                          _this.success(response.data.msg);
-
-                          _this.$router.push("/resources");
-                        }
-                      })["catch"](function (error) {
-                        _this.error(error);
-                      });
-                    } else {
+                    if (_this.extension == "png" || _this.extension == "jpg" || _this.extension == "jpeg") {} else {
                       _this.error("Invalid file type");
 
                       _this.$refs.image.value = null;
                     }
                   }
-                } else {
-                  _this.error("Please choose image");
+
+                  formData = new FormData();
+
+                  if (image && !err) {
+                    formData.append("image", image);
+                    formData.append("type", "image");
+                  }
+
+                  formData.append("name", _this.name);
+                  axios.post("/api/resource/store", formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-data"
+                    }
+                  }).then(function (response) {
+                    if (response.data.status == 1) {
+                      _this.success(response.data.msg);
+
+                      _this.$router.push("/resources");
+                    }
+                  })["catch"](function (error) {
+                    _this.error(error);
+                  });
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }

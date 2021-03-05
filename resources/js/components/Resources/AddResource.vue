@@ -83,45 +83,47 @@ export default {
   methods: {
     async addResource() {
         const valid = await this.$refs.observer.validate();
+        let err = false;
         if(valid) {
           let image = this.$refs.image.files[0];
           if(image) {
             this.image = "";
             this.extension = image.name.split(".").pop();
-
+            let err = false;
             if (
               this.extension == "png" ||
               this.extension == "jpg" ||
               this.extension == "jpeg"
             ) {
-              let formData = new FormData();
-              formData.append("image", image);
-              formData.append("type", "image");
-              formData.append("name", this.name);
-
-              axios
-                .post("/api/resource/store", formData, {
-                  headers: {
-                    "Content-Type": "multipart/form-data"
-                  },
-                })
-                .then(response => {
-                  if (response.data.status == 1) {
-                    this.success(response.data.msg);
-                    this.$router.push("/resources");
-                  }
-                })
-                .catch(error => {
-                  this.error(error);
-                });
             } else {
               this.error("Invalid file type");
               this.$refs.image.value = null;
             }
           }
-        } else {
-          this.error("Please choose image");
+          let formData = new FormData();
+          if(image && !err) {
+            formData.append("image", image);
+            formData.append("type", "image");
+          }
+          formData.append("name", this.name);
+
+          axios
+          .post("/api/resource/store", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            },
+          })
+          .then(response => {
+            if (response.data.status == 1) {
+              this.success(response.data.msg);
+              this.$router.push("/resources");
+            }
+          })
+          .catch(error => {
+            this.error(error);
+          });
         }
+       
     }
   }
 };

@@ -16,4 +16,6 @@ class Resource extends Model
     protected $fillable = [
         'name', 'image'
     ];
+
+    const DEFAULT_PATH = 'resources/default.jpeg';
 }
