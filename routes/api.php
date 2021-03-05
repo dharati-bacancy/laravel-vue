@@ -14,9 +14,6 @@
 //Api for getting count of widgets
 Route::get('/widgets', 'Api\DashboardController@widgets');
 
-//Api for insert 100 records in resource
-Route::get('/insert', 'LaravelController@insertResources');
-
 //Resource Api's
 Route::prefix('resource')->group(function () {
     Route::get('index', 'Api\ResourceController@index');

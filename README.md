@@ -93,5 +93,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - php artisan route:clear
 - php artisan config:clear
 - php artisan migrate
+- php artisan db:seed --class=ResourceSeeder (For 100 prefilled resources)
 - php artisan serve
 - npm run dev
